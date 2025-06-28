@@ -1,5 +1,8 @@
 plugins {
     id 'java'
+//    id 'application'
+//    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.gradleup.shadow' version '8.3.5'
 }
 
 group = 'org.example'
@@ -14,6 +17,26 @@ dependencies {
 
 //    testImplementation platform('org.junit:junit-bom:5.10.0')
 //    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'org.example.DropwizardGradleJavaSimpleApplication',
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version
+        )
+    }
+}
+
+shadowJar {
+    archiveBaseName.set('dropwizard-gradle-java-simple-all')
+    archiveClassifier.set('')
+    archiveVersion.set('1.0-SNAPSHOT')
+    manifest {
+        attributes 'Main-Class': 'org.example.DropwizardGradleJavaSimpleApplication'
+    }
+    mergeServiceFiles()
 }
 
 //test {
